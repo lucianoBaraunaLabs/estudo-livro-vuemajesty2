@@ -5,43 +5,32 @@
 </head>
 <body>
   <div class="container">
-    <h1>Let's hear some stories!</h1>
-    <div>
-      <h3>Alex's stories</h3>
-      <ul class="list-group">
-        <li v-for="story in storiesBy('Alex')"
+    <h1>Let's hear some famous stories! ({{famous.length}})</h1>
+    <ul class="list-group">
+        <li v-for="story in famous"
         class="list-group-item"
         >
-        {{ story.writer }} said "{{ story.plot }}"
-      </li>
+            {{ story.writer }} said "{{ story.plot }}"
+            and upvoted {{ story.upvotes }} times.
+        </li>
     </ul>
-    <h3>John's stories</h3>
+
+    <div class="form-group">
+      <label for="query">
+        What are you looking for?
+      </label>
+      <input v-model="query" class="form-control">
+    </div>
+    <h3>Searc results:</h3>
     <ul class="list-group">
-      <li v-for="story in storiesBy('John')"
+      <li v-for="story in search"
       class="list-group-item"
       >
-      {{ story.writer }} said "{{ story.plot }}"
-    </li>
-  </ul>
-</div>
-<div class="form-group">
-  <label for="query">
-    What are you looking for?
-  </label>
-  <input v-model="query" class="form-control">
-</div>
-<h3>Search results:</h3>
-<ul class="list-group">
-  <li v-for="story in search"
-  class="list-group-item"
-  >
-  {{ story.writer }} said "{{ story.plot }}"
-</li>
-</ul>
-<pre>
-  {{ $data }}
-</pre>
-</div>
+          {{ story.writer }} said "{{ story.plot }}"
+      </li>
+    </ul>
+    <pre>{{ $data }}</pre>
+  </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
 <script type="text/javascript">
@@ -70,19 +59,17 @@ new Vue({
         upvotes: 74
       },
     ],
-    query: ' '
-  },
-  methods:{
-    storiesBy: function (writer) {
-      return this.stories.filter(function (story) {
-        return story.writer === writer
-      })
-    }
+    query: ' ',
   },
   computed: {
-    search: function () {
+    famous: function() {
+      return this.stories.filter(function(item) {
+        return item.upvotes > 25
+      })
+    },
+    search() {
       var query = this.query
-      return this.stories.filter(function (story) {
+      return this.stories.filter(function(story) {
         return story.plot.includes(query)
       })
     }
