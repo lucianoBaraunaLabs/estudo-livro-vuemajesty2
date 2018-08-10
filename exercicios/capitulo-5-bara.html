@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Exercicio - Capítulo 05</title>
+</head>
+<body>
+    <div class="container">
+
+        <ul class="list-group">
+            <li v-for="(candidate, key) in mayorsOrder"
+                 class="list-group-item"
+                 >
+                {{candidate.name}} {{candidate.votes}} <button class="btn btn-default" @click="candidate.votes++">Vote</button>
+            </li>
+        </ul>
+        <button class="btn btn-default" @click="resetVotes">RESET VOTES</button>
+        <pre>{{ $data }}</pre>
+    </div>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script>
+    new Vue({
+        el: '.container',
+        data: {
+            mayors: [
+              {
+                name: 'João',
+                votes: 0
+              },
+              {
+                name: 'Maria',
+                votes: 10
+              }
+            ]
+        },
+        computed: {
+          mayorsOrder() {
+            return this.mayors.sort((a, b) => a.votes < b.votes)
+          }
+        },
+        methods: {
+          resetVotes() {
+            this.mayors.map((mayorTarget) => mayorTarget.votes = 0 )
+          }
+        }
+    })
+</script>
+</html>

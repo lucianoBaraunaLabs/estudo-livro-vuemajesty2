@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cápitulo 3</title>
+</head>
+<body>
+    <div id="app">
+<!-- 
+    não funciona nessa versão do vue
+      <template v-if="gender === 'Masculino'">
+        <h1>Olá Sr.{{name}}</h1>
+      </template>
+      <template v-else-if="gender === 'Feminino'">
+        <h1>Olá Sra.{{name}}</h1>
+      </template>
+      <template v-else>
+        <h1>Olá, Tudo bem ?</h1>
+      </template> -->
+      <div v-if="gender === 'masculino' || gender === 'feminino'">
+        <h1>Olá,
+          <span v-show="gender == 'masculino'">Sr.{{name}}</span>
+          <span v-show="gender == 'feminino'">Sra.{{name}}</span>
+        </h1>
+      </div>
+      <h1 v-else>Qual o seu sexo ?</h1>
+      <div>
+        <label for="Digite seu genêro">Digite seu genêro</label>
+        <input v-model="gender" type="text" placeholder="Ex: masculino ou feminino">
+      </div>
+      <div>
+        <label for="Digite seu nome">Digite seu nome</label>
+        <input v-model="name" type="text" placeholder="Username">
+      </div>
+        
+        <pre>{{ $data }}</pre>
+    </div>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            gender: '',
+            name: ''
+        }
+    })
+</script>
+</html>

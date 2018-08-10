@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>This is me</title>
+</head>
+<body>
+    <div class="container">
+
+        <ul class="list-group">
+            <li v-for="(value, key, index) in person"
+                 class="list-group-item"
+                 >
+                {{index}}: {{key}} = {{value}}
+            </li>
+        </ul>
+        <pre>{{ $data }}</pre>
+    </div>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script>
+    new Vue({
+        el: '.container',
+        data: {
+            person: {
+              nome: "Luciano",
+              peso: "125kg",
+              altura: "180m",
+              comidaFavorita: "Coxinha"
+            }
+        }
+    })
+</script>
+</html>

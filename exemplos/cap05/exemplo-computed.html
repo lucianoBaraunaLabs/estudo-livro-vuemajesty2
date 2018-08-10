@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>Exemplo computed propries</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    a={{ a }}, b={{ b }}
+    <input v-model.number="a" type="text">
+    <pre>
+        {{ $data }}
+    </pre>
+  </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+new Vue({
+  el: '.container',
+  data: {
+    a: 1,
+    b: ''
+  },
+  computed: {
+      // a computed getter
+      b: function () {
+        // **`this`** points to the Vue instance
+        return this.a + 1
+      }
+  },
+  methods: {
+    // calculo: function() {
+    //   this.b = this.a + 1
+    // }
+  }
+});
+</script>
+</html>
