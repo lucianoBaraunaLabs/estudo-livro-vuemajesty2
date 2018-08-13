@@ -1,0 +1,52 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Exercício Cap 06</title>
+</head>
+<body>
+<div class="container">
+    <h1>Peoples</h1>
+    <ul class="list-group">
+        <li v-for="person in orderedPeople()"  :key="person.name" class="list-group-item">
+            {{person}}
+        </li>
+    </ul>
+    <h1>Peoples maiores de 65 anos.</h1>
+    <ul class="list-group">
+        <li v-for="person in old"  :key="person.name" class="list-group-item">
+            {{person}}
+        </li>
+    </ul>
+   
+    <pre>{{ $data }}</pre>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+      el: '.container',
+      data: {
+        people: [ 
+          {name: "Joao", age: 80},
+          {name: "Epaminondas", age: 90},
+          {name: "Atila", age: 19},
+          {name: "Luciano", age: 30},
+          {name: "Gustavo", age: 25},
+        ]
+      },
+      computed: {
+        old() {
+          return this.people.filter((person) => person.age > 65)
+        }
+      },
+      methods: {
+        orderedPeople() {
+          // return this.people.sort((a, b) => a.age - b.age) // aqui diz que tenho um loop infinito e não é recomendado
+          return _.orderBy(this.people, 'age') // aqui já não rola isso.
+        },
+        
+      }
+  })
+</script>
+</html>
