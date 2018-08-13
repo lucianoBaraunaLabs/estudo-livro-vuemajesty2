@@ -42,8 +42,14 @@
       },
       methods: {
         orderedPeople() {
-          // return this.people.sort((a, b) => a.age - b.age) // aqui diz que tenho um loop infinito e não é recomendado
-          return _.orderBy(this.people, 'age') // aqui já não rola isso.
+          // se for feito dessa forma o vue vai entrar em loop por conta da pro
+          // propriedade sempre pode se atualizar e vai exe
+          //
+          return this.people.sort((a, b) => a.age - b.age) 
+         
+          return this.people.slice()
+            .sort((a, b) => a.age - b.age) // dessa for
+          // return _.orderBy(this.people, 'age') // aqui já não rola isso.
         },
         
       }

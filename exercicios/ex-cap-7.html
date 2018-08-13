@@ -1,0 +1,59 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Hello Vue</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>Where would like to go ?</h1>
+      <ul class="list-group">
+        <planet v-for="planet in planets" :planet-info="planet"></Planet>
+      </ul>
+      <pre>{{ $data }}</pre>
+    </div>
+  </div>
+  <template id="planet-template">
+    <li class="list-group-item">
+      Planet: {{ planetInfo.name }} Visited {{ planetInfo.visits }}
+      <button
+        v-show="!isVisted"
+        @click="visit"
+      >
+        Visit
+      </button>
+      <span v-show="planetInfo.visits > 0" class="fa fa-rocket fa-2x pull-right" aria-hidden="true"> - ICONE FOGETE</span>
+    </li>
+  </template>
+  
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+Vue.component('planet', {
+  template: '#planet-template',
+  props: ['planet-info'],
+  computed: {
+    isVisted: function() {
+      return this.planetInfo.visits >= 3 
+    }
+  },
+  methods: {
+    visit() {
+      this.planetInfo.visits++
+    }
+  }
+})
+new Vue({
+  el: '#app',
+  data: {
+    favorite: {},
+    planets: [
+      {name: "Mercury", visits: 0},
+      {name: "Venus", visits: 3},
+      {name: "Mars", visits: 0},
+      {name: "Jupiter", visits: 0}
+    ]
+  }
+})
+</script>
+</html>
