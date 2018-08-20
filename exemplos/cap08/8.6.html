@@ -1,0 +1,111 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Hello Vue</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>Let`s hear some stories!</h1>
+      <ul class="list-group">
+        <story v-for="story in stories" 
+          :story="story" 
+          :favorite="favorite"
+          @update="updateFavorite"></story>
+      </ul>
+      <pre>{{ $data }}</pre>
+    </div>
+  </div>
+  <template id="story-template">
+    <li class="list-group-item">
+      {{ story.writer }} said {{ story.plot }}. Story upvotes {{ story.upvotes }}
+      <button 
+        v-show="!story.voted" 
+        @click="upvote"
+        class="btn btn-default">Upvote</button>
+        <button v-show="!isFavorite" @click="markAsFavorite"
+        class="btn btn-primary">
+            Favorite
+        </button>
+        <span v-show="isFavorite"
+        class="glyphicon glyphicon-star pull-right" aria-hidden="true">
+        </span>
+    </li>
+  </template>
+  
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+Vue.component('story', {
+    template: '#story-template',
+    props: ['story', 'favorite'],
+    methods: {
+      upvote() {
+        this.story.upvotes += 1;
+        this.story.voted = true
+      },
+      markAsFavorite() {
+        this.$emit('update', this.story)
+      },
+      updateFavorite: function() {
+        this.$emit('update', this.story)
+      }
+    },
+    computed:{
+      isFavorite() {
+        return this.story === this.favorite
+      }
+    }
+});
+new Vue({
+  el: '#app',
+  data: {
+    stories: [
+      {
+          plot: 'My horse is amazing.',
+          writer: 'Mr. Weebl',
+          upvotes: 28,
+          voted: false,
+      },
+      {
+          plot: 'Narwhals invented Shish Kebab.',
+          writer: 'Mr. Weebl',
+          upvotes: 8,
+          voted: false,
+      },
+      {
+          plot: 'The dark side of the Force is stronger.',
+          writer: 'Darth Vader',
+          upvotes: 49,
+          voted: false,
+      },
+      {
+          plot: 'One does not simply walk into Mordor',
+          writer: 'Boromir',
+          upvotes: 74,
+          voted: false,
+      },
+    ],
+    favorite: {}
+  },
+  methods:{
+    storiesBy: function (writer) {
+      return this.stories.filter(function (story) {
+        return story.writer === writer
+      })
+    },
+    updateFavorite: function(story) {
+      this.favorite = story
+    }
+  },
+  computed: {
+    search: function () {
+      var query = this.query
+      return this.stories.filter(function (story) {
+        return story.body.includes(query)
+      })
+    }
+  },
+})
+</script>
+</html>
