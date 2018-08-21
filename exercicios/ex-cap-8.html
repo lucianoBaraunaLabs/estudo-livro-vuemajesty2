@@ -1,0 +1,90 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Hello Vue</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>Chariot</h1>
+      <ul class="list-group">
+        <chariot 
+          v-for="chariot in chariots" 
+          :chariot="chariot"
+          :current="current"
+          @select="updateChariot"
+        ></chariot>
+      </ul>
+      <pre>{{ $data }}</pre>
+    </div>
+  </div>
+  <template id="chariot-template">
+    <li class="list-group-item">
+      Chariot Name: {{ chariot.name }} - Qtd.Horses: {{ chariot.horses }}
+      <button
+        @click="rideChariot(chariot)"
+        class="btn btn-default"
+        :disabled="isCurrent"
+      >
+        {{ action }}
+      </button>
+    </li>
+  </template>
+  
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+Vue.component('chariot', {
+  template: '#chariot-template',
+  props: ['chariot', 'current'],
+  computed: {
+    hasMoreHorses() {
+      return this.current.horses < this.chariot.horses
+    },
+    isCurrent() {
+      return this.current.name == this.chariot.name
+    },
+    noChariot: function () {
+      return this.current.name == null;
+    },
+    action() {
+      if (this.noChariot) {
+        action = 'Pick Chariot'
+      } else if (this.isCurrent) {
+        action = 'Riding!'
+      } else if (this.hasMoreHorses) {
+        action = 'Hire Horses'
+      } else {
+        action = 'Dismiss Horses'
+      }
+      return action
+    }
+  },
+  methods: {
+    rideChariot: function (chariot) {
+      console.log('opaa aqui é componenten chariot', chariot)
+      this.$emit('select', chariot)
+    },
+  }
+})
+new Vue({
+  el: '#app',
+  data: {
+    favorite: {},
+    chariots: [
+      {name: "carruagem-1", horses: 2},
+      {name: "carruagem-2", horses: 1},
+      {name: "carruagem-3", horses: 4},
+      {name: "carruagem-4", horses: 3}
+    ],
+    current: {}
+  },
+  methods: {
+    updateChariot(chariot) {
+      console.log('opaa aqui é componenten #app', chariot)
+      this.current = chariot
+    }
+  }
+})
+</script>
+</html>
