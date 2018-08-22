@@ -1,48 +1,19 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <ul class="nav nav-tabs">
-      <li v-for="page in pages" :key="page" :class="isActivePage(page) ? 'active' :''">
-        <a @click="setPage(page)">{{page | capitalize}}</a>
-      </li>
-    </ul>
-    <!-- <Login /> -->
-    <!-- <Register />
-    <Stories /> -->
-    <component :is="activePage" />
+    <br />
+    <router-link :to="{name: 'hello'}" exact>Home</router-link>
+    <router-link :to="{name: 'login'}">Login</router-link>
+    <router-link :to="{ name: 'stories.all'}">Stories</router-link>
+    <!-- route outlet -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Login from './components/Login'
-import Register from './components/Register'
-import Stories from './components/Stories'
 
 export default {
-  name: 'app',
-  components: {
-    Login,
-    Register,
-    Stories
-  },
-  data () {
-    return {
-      pages: [
-        'login',
-        'register',
-        'stories'
-      ],
-      activePage: 'stories'
-    }
-  },
-  methods: {
-    setPage (newPage) {
-      this.activePage = newPage
-    },
-    isActivePage (page) {
-      return this.activePage === page
-    }
-  }
+  name: 'app'
 
 }
 </script>
@@ -56,4 +27,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.router-link-active {
+    color: green;
+  }
 </style>
